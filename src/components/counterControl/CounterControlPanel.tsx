@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from "../UIcustomComponents/Button";
 import {CounterControlPanelType} from "../../types_&_constants/types";
 
-export const CounterControlPanel:React.FC<CounterControlPanelType> = ({counter, incrementBtnName, resetBtnName, incrementCallback, decrementCallback}) => {
+export const CounterControlPanel:React.FC<CounterControlPanelType> = ({counter, incrementBtnName, resetBtnName, incrementCallback, decrementCallback, disableIncrementButton, disableResetButton}) => {
 
     const controlContainer = {
         display: "flex",
@@ -17,8 +17,8 @@ export const CounterControlPanel:React.FC<CounterControlPanelType> = ({counter, 
 
     return (
         <div style={controlContainer}>
-            <Button counter={counter} title={incrementBtnName} callback={incrementCallback}/>
-            <Button counter={counter} title={resetBtnName} callback={decrementCallback}/>
+            <Button counter={counter} callback={incrementCallback} disabled={disableIncrementButton}>INC</Button>
+            <Button counter={counter} callback={decrementCallback} disabled={disableResetButton}>RESET</Button>
         </div>
     );
 };

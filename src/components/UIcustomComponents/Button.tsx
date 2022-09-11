@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 import {ButtonType} from "../../types_&_constants/types";
 import {
     DEFAULT_VALUE_COUNTER,
@@ -7,7 +7,7 @@ import {
     RESET_BUTTON_NAME
 } from "../../types_&_constants/constants";
 
-export const Button: React.FC<ButtonType> = ({counter, title, callback}) => {
+export const Button: React.FC<ButtonType> = ({counter, title, callback, disabled, ...restProps}) => {
 
     const btn = {
         border: "1px aquamarine solid",
@@ -16,9 +16,15 @@ export const Button: React.FC<ButtonType> = ({counter, title, callback}) => {
         marginLeft: "10px",
     }
 
+    const onclickHandler = () => {
+        callback && callback()
+    }
+
     return (
         <>
-            <button style={btn} disabled={counter === LAST_AVAILABLE_NUMBER && title === INCREMENT_BUTTON_NAME ? true :  counter === DEFAULT_VALUE_COUNTER && title === RESET_BUTTON_NAME ? true : false} onClick={callback}>{title}</button>
+            <button {...restProps} style={btn}
+                    disabled={disabled}
+                    onClick={onclickHandler}></button>
         </>
     );
 };

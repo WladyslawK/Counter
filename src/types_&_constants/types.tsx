@@ -1,3 +1,5 @@
+import {DetailedHTMLProps} from "react";
+
 export type CounterOutputType = {
     counter: number
 }
@@ -7,12 +9,16 @@ export type CounterControlPanelType = {
     resetBtnName: string
     incrementCallback: () => void
     decrementCallback: () => void
+    disableIncrementButton: boolean
+    disableResetButton: boolean
 }
 
+type DefaultButtonType = DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-export type ButtonType = {
+export type ButtonType = DefaultButtonType & {
     counter: number
-    title: string
+    title?: string
     callback: () => void
+    disabled: boolean
 }
 

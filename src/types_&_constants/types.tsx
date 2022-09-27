@@ -7,7 +7,7 @@ export type CounterControlPanelType = {
     counter: number
     incrementBtnName: string
     resetBtnName: string
-    incrementCallback: () => void
+    incrementCallback: (newValue: number) => void
     resetCallback: () => void
     disableIncrementButton: boolean
     disableResetButton: boolean
@@ -16,7 +16,6 @@ export type CounterControlPanelType = {
 type DefaultButtonType = DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 export type ButtonType = DefaultButtonType & {
-    counter: number
     title?: string
     callback: () => void
     disabled: boolean

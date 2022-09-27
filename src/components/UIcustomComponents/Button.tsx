@@ -7,7 +7,7 @@ import {
     RESET_BUTTON_NAME
 } from "../../types_&_constants/constants";
 
-export const Button: React.FC<ButtonType> = ({counter, title, callback, disabled, ...restProps}) => {
+export const Button: React.FC<ButtonType> = ({title, callback, disabled, ...restProps}) => {
 
     const btn = {
         border: "1px aquamarine solid",

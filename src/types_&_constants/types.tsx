@@ -8,7 +8,7 @@ export type CounterControlPanelType = {
     incrementBtnName: string
     resetBtnName: string
     incrementCallback: () => void
-    decrementCallback: () => void
+    resetCallback: () => void
     disableIncrementButton: boolean
     disableResetButton: boolean
 }

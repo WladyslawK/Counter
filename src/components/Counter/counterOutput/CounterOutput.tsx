@@ -1,6 +1,6 @@
 import React from 'react';
-import {CounterOutputType} from "../../types_&_constants/types";
-import {LAST_AVAILABLE_NUMBER} from "../../types_&_constants/constants";
+import {CounterOutputType} from "../../../types_&_constants/types";
+import {LAST_AVAILABLE_NUMBER} from "../../../types_&_constants/constants";
 
 export const CounterOutput: React.FC<CounterOutputType> = ({counter}) => {
 
@@ -19,7 +19,7 @@ export const CounterOutput: React.FC<CounterOutputType> = ({counter}) => {
 
     return (
         <div style={containerOutput}>
-            <h3 style={counter === LAST_AVAILABLE_NUMBER ? lastAvailableNumber: {}}>{counter}</h3>
+            <h3 style={counter === LAST_AVAILABLE_NUMBER ? lastAvailableNumber : {}}>{counter}</h3>
         </div>
     );
 };

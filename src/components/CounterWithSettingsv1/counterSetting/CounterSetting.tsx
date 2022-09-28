@@ -48,6 +48,10 @@ export const CounterSetting: React.FC<CounterSettingType> = (props) => {
     const setValuesHandler = () => {
         props.changeStartValue(startValue)
         props.changeMaxValue(maxValue)
+
+        //set localStorage
+        localStorage.setItem("startValue", startValue.toString())
+        localStorage.setItem("maxValue", maxValue.toString())
     }
 
     return (

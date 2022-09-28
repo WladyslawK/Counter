@@ -16,22 +16,29 @@ function App() {
     const [counter, setCounter] = useState<number>(DEFAULT_VALUE_COUNTER)
 
 
-    const incrementCallback = (newValue:number) => setCounter(newValue)
+    const incrementCallback = (newValue: number) => setCounter(newValue)
     const resetCallback = () => setCounter(0)
     const disableIncrementButton = () => counter === 5
     const disableResetButton = () => counter === 0
 
-    //for CounterV1 and CounterV2
-    const [counterV1, setCounterV1] = useState<number>(DEFAULT_VALUE_COUNTER)
-    const [maxValue, setMaxValue] = useState<number>(5)
-    const [startValue, setStartValue] = useState<number>(0)
 
-    const incrementV1 = (newValue:number) => setCounterV1(newValue)
+    //for CounterV1 and CounterV2
+    //local storage get
+    const initialStartValue = Number(localStorage.getItem("startValue"))
+    const initialMaxValue = Number(localStorage.getItem("maxValue"))
+
+    const [counterV1, setCounterV1] = useState<number>(DEFAULT_VALUE_COUNTER)
+    const [startValue, setStartValue] = useState<number>(initialStartValue)
+    const [maxValue, setMaxValue] = useState<number>(initialMaxValue)
+
+
+
+    const incrementV1 = (newValue: number) => setCounterV1(newValue)
     const resetV1 = () => setCounterV1(startValue)
     const disabledIncr = () => counterV1 === maxValue
     const disabledReset = () => counterV1 === startValue
 
-    useEffect(()=> setCounterV1(startValue), [startValue, maxValue])
+    useEffect(() => setCounterV1(startValue), [startValue, maxValue])
 
     const changeStartValue = (newValue: number) => {
         setStartValue(newValue)
@@ -52,7 +59,9 @@ function App() {
             <CounterControlPanel counter={counter} incrementBtnName={INCREMENT_BUTTON_NAME} resetBtnName={RESET_BUTTON_NAME} incrementCallback={incrementCallback} resetCallback={resetCallback} disableIncrementButton={disableIncrementButton()} disableResetButton={disableResetButton()}/>
             </div>*/}
             <div>
-                <CounterV1 counter={counterV1} increment={incrementV1} reset={resetV1} disabledReset={disabledReset()} disabledInc={disabledIncr()} startValue={startValue} maxValue={maxValue} changeStartValue={changeStartValue} changeMaxValue={changeMaxValue}/>
+                <CounterV1 counter={counterV1} increment={incrementV1} reset={resetV1} disabledReset={disabledReset()}
+                           disabledInc={disabledIncr()} startValue={startValue} maxValue={maxValue}
+                           changeStartValue={changeStartValue} changeMaxValue={changeMaxValue}/>
             </div>
         </>
     );

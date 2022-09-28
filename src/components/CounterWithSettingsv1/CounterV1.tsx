@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {CounterOutput} from "./counterOutput/CounterOutput";
 import {Route, Routes} from "react-router-dom";
 import {CounterSetting} from "./counterSetting/CounterSetting";

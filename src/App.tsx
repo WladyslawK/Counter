@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import './App.css';
 import {CounterOutput} from "./components/Counter/counterOutput/CounterOutput";
 import {CounterControlPanel} from "./components/Counter/counterControl/CounterControlPanel";
@@ -10,6 +10,10 @@ import {
 import {Counter} from "./components/Counter/Counter";
 import {CounterV1} from "./components/CounterWithSettingsv1/CounterV1";
 import {CounterV2} from "./components/CounterWithSettingsv2/CounterV2";
+import {
+    counterV1Reducer,
+    incrementCounterAC, resetCounterAC, setStartValueAC
+} from "./components/CounterWithSettingsv1/CounterV1Reducers/CounterV1Reducer";
 
 function App() {
 
@@ -28,19 +32,19 @@ function App() {
     const initialStartValue = Number(localStorage.getItem("startValue"))
     const initialMaxValue = Number(localStorage.getItem("maxValue"))
 
-    const [counterV1, setCounterV1] = useState<number>(DEFAULT_VALUE_COUNTER)
+    const [counterV1, counterV1Dispatch] = useReducer(counterV1Reducer, DEFAULT_VALUE_COUNTER)
     const [startValue, setStartValue] = useState<number>(initialStartValue)
     const [maxValue, setMaxValue] = useState<number>(initialMaxValue)
 
-    const incrementV1 = (newValue: number) => setCounterV1(newValue)
-    const resetV1 = () => setCounterV1(startValue)
+    const incrementV1 = () => counterV1Dispatch(incrementCounterAC())
+    const resetV1 = () => counterV1Dispatch(resetCounterAC())
     const disabledIncr = () => counterV1 === maxValue
     const disabledReset = () => counterV1 === startValue
 
     //error for counter v2
     const [error, setError] = useState("")
 
-    useEffect(() => setCounterV1(startValue), [startValue, maxValue])
+    useEffect(() => counterV1Dispatch(setStartValueAC(startValue)), [startValue, maxValue])
 
     const changeStartValue = (newValue: number) => {
         setStartValue(newValue)
@@ -68,11 +72,11 @@ function App() {
             </div>
 
             {/*---COUNTER V2---*/}
-            <div>
+            {/*<div>
                 <CounterV2 counter={counterV1} increment={incrementV1} reset={resetV1} disabledReset={disabledReset()}
                            disabledInc={disabledIncr()} startValue={startValue} maxValue={maxValue}
                            changeStartValue={changeStartValue} changeMaxValue={changeMaxValue} error={error} changeError={changeError}/>
-            </div>
+            </div>*/}
         </>
     );
 }

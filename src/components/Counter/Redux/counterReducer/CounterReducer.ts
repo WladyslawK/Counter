@@ -1,7 +1,7 @@
 const INCREMENT_COUNTER = "INCREMENT-COUNTER"
 const RESET_COUNTER = "RESET-COUNTER"
 
-type initialStateType = {
+export type initialStateType = {
     counter: number
 }
 

@@ -12,7 +12,7 @@ export const CounterControlPanel: React.FC<CounterControlPanelType> = ({
                                                                            disableResetButton
                                                                        }) => {
 
-    const incrementCounter = () => incrementCallback(counter+1)
+    const incrementCounter = () => incrementCallback()
 
     return (
         <div className={"controlContainer"}>

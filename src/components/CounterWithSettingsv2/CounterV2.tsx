@@ -1,24 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {CounterOutput} from "./counterOutput/CounterOutput";
 import {CounterSetting} from "./counterSetting/CounterSetting";
+import {DEFAULT_VALUE_COUNTER} from "../../types_&_constants/constants";
 
 
-type CounterV2Type = {
-    counter: number
-    increment: (newValue: number) => void
-    reset: () => void
-    disabledInc: boolean
-    disabledReset: boolean
-    startValue: number
-    maxValue: number
-    changeStartValue: (newValue: number) => void
-    changeMaxValue: (newValue: number) => void
-    error: string
-    changeError: (error: string) => void
-}
-
-export const CounterV2: React.FC<CounterV2Type> = (props) => {
+export const CounterV2: React.FC = (props) => {
 
     const mainContainer = {
         marginTop: "50px",
@@ -26,14 +13,32 @@ export const CounterV2: React.FC<CounterV2Type> = (props) => {
         justifyContent: "center"
     }
 
-    const incrementCounter = () => props.increment(props.counter + 1)
+    const initialStartValue = Number(localStorage.getItem("startValue"))
+    const initialMaxValue = Number(localStorage.getItem("maxValue"))
+
+    const [counterV2, setCounterV2] = useState<number>(DEFAULT_VALUE_COUNTER)
+    const [startValue, setStartValue] = useState<number>(initialStartValue)
+    const [maxValue, setMaxValue] = useState<number>(initialMaxValue)
+    const [error, setError] = useState("")
+
+
+    const incrementCounter = () => setCounterV2(counterV2 + 1)
+    const resetCounter = () => setCounterV2(startValue)
+    const disableInc = () => counterV2 === maxValue
+    const disableReset = () => counterV2 === startValue
+    const setStatCounter = (value: number) => setCounterV2(value)
+
+    const changeMaxValue = (value: number) => setMaxValue(value)
+    const changeStartValue = (value: number) => setStartValue(value)
+
+    const changeError = (error: string) => setError(error)
 
     return (
         <div style={mainContainer}>
 
-            <CounterSetting startValue={props.startValue} maxValue={props.maxValue} changeMaxValue={props.changeMaxValue} changeStartValue={props.changeStartValue} error={props.error} changeError={props.changeError}/>
+            <CounterSetting startValue={startValue} maxValue={maxValue} changeMaxValue={changeMaxValue} changeStartValue={changeStartValue} error={error} changeError={changeError} setStatCounter={setStatCounter}/>
 
-            <CounterOutput counter={props.counter} incrementCounter={incrementCounter} resetCounter={props.reset} disabledInc={props.disabledInc} disabledReset={props.disabledReset} maxValue={props.maxValue} error={props.error}/>
+            <CounterOutput counter={counterV2} incrementCounter={incrementCounter} resetCounter={resetCounter} disabledInc={disableInc()} disabledReset={disableReset()} maxValue={maxValue} error={error}/>
 
         </div>
     );

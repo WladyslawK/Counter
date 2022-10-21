@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {CounterOutput} from "./counterOutput/CounterOutput";
 import {Route, Routes} from "react-router-dom";
 import {CounterSetting} from "./counterSetting/CounterSetting";
+import {DEFAULT_VALUE_COUNTER} from "../../types_&_constants/constants";
 
-type CounterV1Type = {
-    counter: number
-    increment: () => void
-    reset: () => void
-    disabledInc: boolean
-    disabledReset: boolean
-    startValue: number
-    maxValue: number
-    changeStartValue: (newValue: number) => void
-    changeMaxValue: (newValue: number) => void
-}
 
-export const CounterV1: React.FC<CounterV1Type> = (props) => {
+export const CounterV1: React.FC = (props) => {
+
+
+    const initialStartValue = Number(localStorage.getItem("startValue"))
+    const initialMaxValue = Number(localStorage.getItem("maxValue"))
+
+    const [counterV1, setCounterV1] = useState<number>(DEFAULT_VALUE_COUNTER)
+    const [startValue, setStartValue] = useState<number>(initialStartValue)
+    const [maxValue, setMaxValue] = useState<number>(initialMaxValue)
+
+    const incrementV1 = () => setCounterV1(counterV1 + 1)
+    const resetV1 = () => setCounterV1(startValue)
+    const disabledIncr = () => counterV1 === maxValue
+    const disabledReset = () => counterV1 === startValue
+
+    useEffect(() => setCounterV1(startValue), [startValue, maxValue])
+
+    const changeStartValue = (newValue: number) => {
+        setStartValue(newValue)
+    }
+    const changeMaxValue = (newValue: number) => {
+        setMaxValue(newValue)
+    }
+
 
     const mainContainer = {
         marginTop: "20px",
@@ -23,14 +36,13 @@ export const CounterV1: React.FC<CounterV1Type> = (props) => {
         justifyContent: "center"
     }
 
-
     return (
-        <div style={mainContainer}>
+        <>
             <Routes>
-                <Route path={'/'} element={<CounterOutput counter={props.counter} incrementCounter={props.increment} resetCounter={props.reset} disabledInc={props.disabledInc} disabledReset={props.disabledReset} maxValue={props.maxValue} startValue={props.startValue}/>}/>
+                <Route path={'/'} element={<CounterOutput counter={counterV1} incrementCounter={incrementV1} resetCounter={resetV1} disabledInc={disabledIncr()} disabledReset={disabledReset()} maxValue={maxValue} startValue={startValue}/>}/>
 
-                <Route path={'/settings'} element={<CounterSetting startValue={props.startValue} maxValue={props.maxValue} changeMaxValue={props.changeMaxValue} changeStartValue={props.changeStartValue}/>}/>
+                <Route path={'/settings'} element={<CounterSetting startValue={startValue} maxValue={maxValue} changeMaxValue={changeMaxValue} changeStartValue={changeStartValue}/>}/>
             </Routes>
-        </div>
+        </>
     );
 };

@@ -1,0 +1,6 @@
+.container{
+    width: 240px;
+    border: 1px aquamarine solid;
+    border-radius: 7px;
+    text-align: center;
+}

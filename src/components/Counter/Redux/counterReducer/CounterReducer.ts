@@ -20,9 +20,8 @@ export const counterReducer = (state: initialStateType = initialState, action: A
     }
 }
 
-type ActionsType = incrementCounterACType | resetCounterACType
+type ActionsType = ReturnType<typeof incrementCounterAC> | ReturnType<typeof resetCounterAC>
 
-type incrementCounterACType = ReturnType<typeof incrementCounterAC>
 export const incrementCounterAC = (counterValue: number) => {
     return{
         type: INCREMENT_COUNTER,
@@ -32,7 +31,6 @@ export const incrementCounterAC = (counterValue: number) => {
     } as const
 }
 
-type resetCounterACType = ReturnType<typeof resetCounterAC>
 export const resetCounterAC = () => {
     return {
         type: RESET_COUNTER,
